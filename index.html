@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Main Page</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+    }
+
+    .button-container {
+      text-align: center;
+    }
+
+    .start-button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 50px;
+      border: none;
+      background-color: rgb(12, 3, 53);
+      color: white;
+      cursor: pointer;
+
+    }
+
+    .card {
+      width: 400px;
+      background-color: #ffffff;
+      padding: 20px;
+      margin: 0 auto;
+      border-radius: 5px;
+    }
+
+    .question {
+      margin-bottom: 20px;
+    }
+
+    .answer {
+      background-color: #eee;
+      color: #555;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    .selected {
+      background-color: lightpink;
+    }
+
+    .correct {
+      background-color: rgb(65, 248, 65);
+      color: #555;
+    }
+
+    .incorrect {
+      background-color: red;
+      color: white;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #nextButton {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: rgb(9, 208, 9);
+      color: #555;
+      cursor: pointer;
+      text-align: center;
+      width: 100%;
+    }
+
+
+
+    .result {
+      text-align: center;
+      width: 400px;
+      background-color: #f2f2f2;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .reset-button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: purple;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="button-container">
+    <button class="start-button" onclick="redirectToQuiz()">Give Treatment</button>
+  </div>
+
+  <div class="card" style="display: none;">
+    <div class="question">
+      <h1>Multiple Choice Question Test</h1>
+      <p>Which of the following treatments should you give first?</p>
+    </div>
+    <button class="answer" onclick="checkAnswer(this)">a) Atorvastatin</button>
+    <button class="answer" onclick="checkAnswer(this)">b) Cholestyramine</button>
+    <button class="answer" onclick="checkAnswer(this)">c) Vitamin K IV</button>
+    <button class="answer" onclick="checkAnswer(this)">d) Naproxen</button>
+    <div class="btn-container">
+      <button id="nextButton" style="display: none;" onclick="showNextPage()">Next</button>
+    </div>
+  </div>
+
+  <div class="result" id="result" style="display: none;">
+    <h1>Well Done</h1>
+    <p>You have completed the question.</p>
+    <button class="reset-button" onclick="resetQuestion()">Reset</button>
+  </div>
+
+  <script>
+    function redirectToQuiz() {
+      document.querySelector('.button-container').style.display = 'none';
+      document.querySelector('.card').style.display = 'block';
+    }
+
+    function checkAnswer(button) {
+      var answers = document.querySelectorAll(".answer");
+      var isCorrect = button.textContent === "c) Vitamin K IV";
+
+      for (var i = 0; i < answers.length; i++) {
+        answers[i].classList.remove("selected");
+        // answers[i].classList.remove("correct");
+        // answers[i].classList.remove("incorrect");
+
+        if (answers[i].classList.contains("incorrect")) {
+          answers[i].classList.add("incorrect");
+        }
+      }
+
+      button.classList.add("selected");
+
+      if (isCorrect) {
+        button.classList.add("correct");
+        alert("Correct! Vitamin K IV should be given first.");
+        document.getElementById("nextButton").style.display = "block";
+      } else {
+        button.classList.add("incorrect");
+        alert("Incorrect. Try Again.");
+      }
+    }
+
+    function showNextPage() {
+      document.querySelector('.card').style.display = 'none';
+      document.querySelector('.result').style.display = 'block';
+    }
+
+    function resetQuestion() {
+      var answers = document.querySelectorAll(".answer");
+      for (var i = 0; i < answers.length; i++) {
+        answers[i].classList.remove("selected");
+        answers[i].classList.remove("correct");
+        answers[i].classList.remove("incorrect");
+      }
+      document.getElementById("result").classList.remove("show");
+      document.getElementById("nextButton").style.display = "none";
+      document.querySelector('.button-container').style.display = 'block';
+      document.querySelector('.result').style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>
